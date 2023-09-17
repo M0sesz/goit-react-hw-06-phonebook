@@ -4,7 +4,12 @@ import { deleteContact } from '../store/contactsSlice';
 import { DeleteButton } from './Form.styled';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => {
+    const { contacts, filter } = state.contacts;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  });
   const dispatch = useDispatch();
 
   if (!contacts || contacts.length === 0) {

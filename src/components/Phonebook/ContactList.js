@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from '../store/contactsSlice';
 import { DeleteButton } from './Form.styled';
-import { setFilter } from '../store/filterSlice';
 
 const ContactList = () => {
   const { contacts, filter } = useSelector(state => state.contacts);
@@ -13,7 +12,6 @@ const ContactList = () => {
 
   const handleDeleteContact = id => {
     dispatch(deleteContact(id));
-    dispatch(setFilter(''));
   };
 
   return (

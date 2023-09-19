@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../store/contactsSlice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -17,10 +17,19 @@ const validationSchema = Yup.object({
 
 const ContactForm = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contacts);
 
   const handleSubmit = (values, { resetForm }) => {
-    dispatch(addContact({ ...values }));
-    resetForm();
+    const existingContact = contacts.find(
+      contact => contact.name === values.name
+    );
+
+    if (existingContact) {
+      alert(`Contact with name "${values.name}" already exists.`);
+    } else {
+      dispatch(addContact({ ...values }));
+      resetForm();
+    }
   };
 
   return (
